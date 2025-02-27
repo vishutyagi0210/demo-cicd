@@ -45,8 +45,8 @@ jobs:
           tags: vishu0210/ws-backend:${{github.sha}}
 
   deploy_to_server:
-  runs-on: ubuntu-latest
-  steps:
+    runs-on: ubuntu-latest
+    steps:
     - name: ssh into machine
       run: |
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
