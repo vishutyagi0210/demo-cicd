@@ -50,7 +50,7 @@ jobs:
       
       - name: ssh into machine
         run: | 
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+          echo "${{ secrets.PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@103.240.24.242
           mkdir newfile
