@@ -47,11 +47,6 @@ jobs:
           file: ./docker/Dockerfile.ws-backend
           push: true
           tags: vishu0210/ws-backend:${{github.sha}}
-      
-      # - name: Setup SSH
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Setup SSH key
         run: |
@@ -59,12 +54,6 @@ jobs:
           echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VM_IP }} >> ~/.ssh/known_hosts
-          
-      # - name: Debug SSH key
-      #   run: |
-      #     # Check if the key looks valid (shouldn't show full key in logs)
-      #     wc -l ~/.ssh/id_rsa
-      #     head -n 1 ~/.ssh/id_rsa
           
       - name: Connect and update vm
         run: |
@@ -76,15 +65,18 @@ jobs:
       - name: Transfer files via SCP
         run: |
           scp docker-compose.yml .env-db ${{ secrets.VM_USER}}@${{ secrets.VM_IP }}:/home/ubuntu/
+          ssh ${{secrets.VM_USER}}@${{secrets.VM_IP}} << EOF
+            cd /home/ubuntu
+            echo "" >> .env-db
+            echo "GIT_SHA=${{ github.sha }}" >> .env-db
+          EOF
 
 
       - name: Run Docker Compose
         run: |
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_IP }} << EOF
             cd /home/ubuntu
-            echo "" >> .env-db  # Ensure a new line before appending
-            echo "GIT_SHA=${{ github.sha }}" >> .env-db
-            cat .env-db  
+            docker compose down
             docker compose --env-file .env-db up -d
           EOF
             
