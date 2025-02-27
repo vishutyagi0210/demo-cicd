@@ -48,10 +48,12 @@ jobs:
           push: true
           tags: vishu0210/ws-backend:${{github.sha}}
       
-      - name: ssh into machine
-        run: | 
-          echo "${{ secrets.PRIVATE_KEY }}" > ~/ssh_key
-          chmod 600 ~/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@103.240.24.242
-          mkdir newfile
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Connect and create directory
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@103.240.24.242 'mkdir newfile'
     
