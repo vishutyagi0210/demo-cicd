@@ -51,7 +51,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.8.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Connect and create directory
         run: |
