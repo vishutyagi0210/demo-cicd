@@ -53,9 +53,19 @@ jobs:
       #   with:
       #     ssh-private-key: ${{ secrets.PRIVATE_KEY }}
 
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 103.240.24.6 >> ~/.ssh/known_hosts
+          
+      - name: Debug SSH key
+        run: |
+          # Check if the key looks valid (shouldn't show full key in logs)
+          wc -l ~/.ssh/id_rsa
+          head -n 1 ~/.ssh/id_rsa
+          
       - name: Connect and create directory
         run: |
-          echo "${{ secrets.PRIVATE_KEY }}" &> ~/ssh_key
-          chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no ubuntu@103.240.24.6 'mkdir newfile'
-    
+          ssh -v ubuntu@103.240.24.6 'mkdir newfile'
