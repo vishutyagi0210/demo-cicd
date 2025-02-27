@@ -78,20 +78,14 @@ jobs:
           scp docker-compose.yml .env-db ${{ secrets.VM_USER}}@${{ secrets.VM_IP }}:/home/ubuntu/
 
 
-      - name: Running Docker Compose
+      - name: Run Docker Compose
         run: |
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_IP }} << EOF
-            cd /home/ubuntu || exit 1
-            ls -lah  # Check if files exist
-            if [ ! -f "docker-compose.yml" ]; then
-              echo "Error: docker-compose.yml not found!"
-              exit 1
-            fi
-            if [ ! -f ".env-db" ]; then
-              echo "Error: .env-db file not found!"
-              exit 1
-            fi
+            cd /home/ubuntu
+            echo "" >> .env-db  # Ensure a new line before appending
+            echo "GIT_SHA=${{ github.sha }}" >> .env-db
+            cat .env-db  
             docker compose --env-file .env-db up -d
           EOF
-
-      
+            
+            
