@@ -60,12 +60,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 103.240.24.6 >> ~/.ssh/known_hosts
           
-      - name: Debug SSH key
-        run: |
-          # Check if the key looks valid (shouldn't show full key in logs)
-          wc -l ~/.ssh/id_rsa
-          head -n 1 ~/.ssh/id_rsa
+      # - name: Debug SSH key
+      #   run: |
+      #     # Check if the key looks valid (shouldn't show full key in logs)
+      #     wc -l ~/.ssh/id_rsa
+      #     head -n 1 ~/.ssh/id_rsa
           
       - name: Connect and create directory
         run: |
-          ssh -v ubuntu@103.240.24.6 'mkdir newfile'
+          ssh -v ubuntu@103.240.24.6
+
+      - name: transfer file via scp to my vm
+        run: 
+      
+      
