@@ -18,6 +18,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Set up environment variables
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > ./packages/db/.env
+
       - name: building the frontend
         uses: docker/build-push-action@v4
         with:
