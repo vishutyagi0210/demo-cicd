@@ -75,6 +75,7 @@ jobs:
             sudo usermod -aG docker ${{ secrets.VM_USER }}
             newgrp docker
           EOF
+          
 
       - name: Transfer files via SCP
         run: |
