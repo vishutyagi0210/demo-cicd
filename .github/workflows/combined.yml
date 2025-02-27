@@ -45,7 +45,7 @@ jobs:
           tags: vishu0210/ws-backend:${{github.sha}}
       
       - name: ssh into machine
-        run: |
+        run: | 
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
           chmod 600 ~/ssh_key
           ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@103.240.24.242
