@@ -70,7 +70,7 @@ jobs:
         run: |
           ssh -v ubuntu@103.240.24.6
 
-      - name: transfer file via scp to my vm
-        run: 
+      # - name: transfer file via scp to my vm
+      #   run: 
       
       
