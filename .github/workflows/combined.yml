@@ -48,12 +48,14 @@ jobs:
           push: true
           tags: vishu0210/ws-backend:${{github.sha}}
       
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+      # - name: Setup SSH
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.PRIVATE_KEY }}
 
       - name: Connect and create directory
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@103.240.24.242 'mkdir newfile'
+          echo "${{ secrets.PRIVATE_KEY }}" &> ~/ssh_key
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no ubuntu@103.240.24.6 'mkdir newfile'
     
