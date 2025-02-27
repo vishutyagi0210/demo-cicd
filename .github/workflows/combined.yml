@@ -68,7 +68,7 @@ jobs:
           
       - name: Connect and create directory
         run: |
-          ssh ${{ secrets.VM_USER}}:${{ secrets.VM_IP }} << EOF
+          ssh ${{ secrets.VM_USER}}@${{ secrets.VM_IP }} << EOF
             sudo apt-get update 
             sudo apt-get install docker.io -y
             sudo apt-get install docker-compose-v2 -y
