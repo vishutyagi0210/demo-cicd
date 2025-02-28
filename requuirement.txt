@@ -1,0 +1,24 @@
+~ github secrets
+
+DATABASE_URL postgresql://neondb_owner:npg_bwze1ypPlRG9@ep-empty-boat-a8g34w8a-pooler.eastus2.azure.neon.tech/neondb?sslmode=require
+DOCKER_PASSWORD
+DOCKER_USERNAME
+PRIVATE_KEY
+VM_IP
+VM_USER ~ ubuntu
+
+
+~ For VM
+
+    configurations of VM: 
+        image: linux
+        user: ubuntu
+        distro: debian
+
+    configure the VM: 
+        sudo apt-get update
+        sudo apt-get install docker.io -y
+        sudo apt-get install docker-compose-v2
+        sudo usermod -aG docker ubuntu
+        newgrp docker
+

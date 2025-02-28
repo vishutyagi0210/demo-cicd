@@ -1,0 +1,23 @@
+version: "3.8"
+name: "monorepo-dc"
+
+services:
+
+  frontend:
+    image: vishu0210/frontend-backend:${GIT_SHA}
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+  http-backend:
+    image: vishu0210/http-backend:${GIT_SHA}
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+  ws-backend:
+    image: vishu0210/ws-backend:${GIT_SHA}
+    ports:
+      - 8081:8081
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
